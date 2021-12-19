@@ -46,7 +46,6 @@ func ConvertToHeader(raw []byte, l *logger.Logger) ([]Header, error) {
 	PurchaseContractTargetAmount:   data.PurchaseContractTargetAmount,
 	InvoicingParty:                 data.InvoicingParty,
 	ReleaseCode:                    data.ReleaseCode,
-	IncotermsVersion:               data.IncotermsVersion,
 	LastChangeDateTime:             data.LastChangeDateTime,
 	PurchasingProcessingStatus:     data.PurchasingProcessingStatus,
 	PurchasingProcessingStatusName: data.PurchasingProcessingStatusName,

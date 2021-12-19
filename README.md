@@ -2,7 +2,7 @@
 sap-api-integrations-purchase-contract-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で　購買基本契約データを取得するマイクロサービスです。    
 sap-api-integrations-purchase-contract-reads には、サンプルのAPI Json フォーマットが含まれています。   
 sap-api-integrations-purchase-contract-reads は、オンプレミス版である（＝クラウド版ではない）SAPS4HANA API の利用を前提としています。クラウド版APIを利用する場合は、ご注意ください。   
-https://api.sap.com/api/OP_API_SALES_CONTRACT_SRV_0001/overview
+https://api.sap.com/api/OP_API_PURCHASE_CONTRACT_SRV_0001/overview  
 
 ## 動作環境  
 sap-api-integrations-purchase-contract-reads は、主にエッジコンピューティング環境における動作にフォーカスしています。  
@@ -18,20 +18,20 @@ sap-api-integrations-purchase-contract-reads は、外部システムがクラ�
 ## 本レポジトリ が 対応する API サービス
 sap-api-integrations-purchase-contract-reads が対応する APIサービス は、次のものです。
 
-* APIサービス概要説明 URL: https://api.sap.com/api/OP_API_PURCHASE_CONTRACT_SRV_0001/overview
+* APIサービス概要説明 URL: https://api.sap.com/api/OP_API_PURCHASE_CONTRACT_SRV_0001/overview  
 * APIサービス名(=baseURL): API_PURCHASE_CONTRACT_SRV
 
 ## 本レポジトリ に 含まれる API名
-sap-api-integrations-sales-contract-reads には、次の API をコールするためのリソースが含まれています。  
+sap-api-integrations-purchase-contract-reads には、次の API をコールするためのリソースが含まれています。  
 
-* A_PurchaseContract（購買基本契約 - ヘッダ）※購買基本契約の詳細データを取得するために、ToHeaderPartner、ToItem、ToItemPricingElement、ToItemScheduleLine、と合わせて利用されます。
-* A_PurchaseContractItem（購買基本契約 - 明細）※購買基本契約明細の詳細データを取得するために、ToItemPricingElement、と合わせて利用されます。
-* ToHeaderPartner（購買基本契約 - ヘッダ取引先）
+* A_PurchaseContract（購買基本契約 - ヘッダ）※購買基本契約の詳細データを取得するために、ToHeaderPartner、ToItem、ToItemCondition、ToItemAddress、と合わせて利用されます。
+* A_PurchaseContractItem（購買基本契約 - 明細）※購買基本契約明細の詳細データを取得するために、ToItemCondition、ToItemAddress、と合わせて利用されます。
 * ToItem（購買基本契約 - 明細）
-* ToItemPricingElement（購買基本契約 - 明細価格条件）
+* ToItemCondition（購買基本契約 - 明細価格条件）
+* ToItemAddress（購買基本契約 - 明細住所）
 
 ## API への 値入力条件 の 初期値
-sap-api-integrations-sales-contract-reads において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
+sap-api-integrations-purchase-contract-reads において、API への値入力条件の初期値は、入力ファイルレイアウトの種別毎に、次の通りとなっています。  
 
 ### SDC レイアウト
 
@@ -49,9 +49,9 @@ accepter において 下記の例のように、データの種別（＝APIの�
 ここでは、"Header" が指定されています。
 
 ```
-	"api_schema": "sap.s4.beh.salescontract.v1.SalesContract.Created.v1",
+	"api_schema": "sap.s4.beh.purchasecontract.v1.PurchaseContract.Created.v1",
 	"accepter": ["Header"],
-	"sales_contract": "40000000",
+	"purchase_contract": "4600000001",
 	"deleted": false
 ```
   
@@ -60,9 +60,9 @@ accepter において 下記の例のように、データの種別（＝APIの�
 全データを取得する場合、sample.json は以下のように記載します。  
 
 ```
-	"api_schema": "sap.s4.beh.salescontract.v1.SalesContract.Created.v1",
+	"api_schema": "sap.s4.beh.purchasecontract.v1.PurchaseContract.Created.v1",
 	"accepter": ["All"],
-	"sales_contract": "40000000",
+	"purchase_contract": "4600000001",
 	"deleted": false
 ```
 
@@ -72,19 +72,19 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetSalesContract(salesContract, salesContractItem string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetPurchaseContract(purchaseContract, purchaseContractItem string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
 		switch fn {
 		case "Header":
 			func() {
-				c.Header(salesContract)
+				c.Header(purchaseContract)
 				wg.Done()
 			}()
 		case "Item":
 			func() {
-				c.Item(salesContract, salesContractItem)
+				c.Item(purchaseContract, purchaseContractItem)
 				wg.Done()
 			}()
 		default:
@@ -98,53 +98,45 @@ func (c *SAPAPICaller) AsyncGetSalesContract(salesContract, salesContractItem st
 
 ## Output  
 本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
-以下の sample.json の例は、SAP 販売契約 の ヘッダデータ が取得された結果の JSON の例です。  
+以下の sample.json の例は、SAP 購買基本契約 の ヘッダデータ が取得された結果の JSON の例です。  
 以下の項目のうち、"SalesContract" ～ "to_Item" は、/SAP_API_Output_Formatter/type.go 内 の Type Product {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-sales-contract-reads/SAP_API_Caller/caller.go#L58",
-	"function": "sap-api-integrations-sales-contract-reads/SAP_API_Caller.(*SAPAPICaller).Header",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-purchase-contract-reads/SAP_API_Caller/caller.go#L58",
+	"function": "sap-api-integrations-purchase-contract-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
 	"message": [
 		{
-			"SalesContract": "40000000",
-			"SalesContractType": "CQ",
-			"SalesOrganization": "1710",
-			"DistributionChannel": "10",
-			"OrganizationDivision": "00",
-			"SalesGroup": "",
-			"SalesOffice": "",
-			"SalesDistrict": "",
-			"SoldToParty": "17100001",
-			"CreationDate": "/Date(1498176000000)/",
-			"LastChangeDate": "",
-			"PurchaseOrderByCustomer": "123",
-			"CustomerPurchaseOrderDate": "",
-			"SalesContractDate": "/Date(1498176000000)/",
-			"TotalNetAmount": "1755.00",
-			"TransactionCurrency": "USD",
-			"SDDocumentReason": "",
-			"PricingDate": "/Date(1498176000000)/",
+			"PurchaseContract": "4600000001",
+			"PurchaseContractType": "MK",
+			"CompanyCode": "1710",
+			"PurchasingDocumentDeletionCode": "",
+			"CreationDate": "/Date(1471305600000)/",
+			"Supplier": "USSU-VSF10",
+			"PurchasingOrganization": "1710",
+			"PurchasingGroup": "001",
+			"PaymentTerms": "0001",
+			"NetPaymentDays": "0",
+			"DocumentCurrency": "USD",
+			"ExchangeRate": "1.00000",
+			"ValidityStartDate": "/Date(1467331200000)/",
+			"ValidityEndDate": "/Date(1469923200000)/",
+			"SupplierRespSalesPersonName": "",
+			"SupplierPhoneNumber": "",
 			"IncotermsClassification": "EXW",
-			"CustomerPaymentTerms": "0004",
-			"PaymentMethod": "",
-			"SalesContractValidityStartDate": "/Date(1498176000000)/",
-			"SalesContractValidityEndDate": "/Date(1501459200000)/",
-			"SalesContractSignedDate": "",
-			"ReferenceSDDocument": "",
-			"ReferenceSDDocumentCategory": "",
-			"SalesDocApprovalStatus": "",
-			"SalesContractApprovalReason": "",
-			"OverallSDProcessStatus": "A",
-			"TotalCreditCheckStatus": "",
-			"OverallSDDocumentRejectionSts": "A",
-			"to_Partner": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_Contract_SRV/A_SalesContract('40000000')/to_Partner",
-			"to_Item": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_SALES_Contract_SRV/A_SalesContract('40000000')/to_Item"
+			"PurchaseContractTargetAmount": "4000.00",
+			"InvoicingParty": "",
+			"ReleaseCode": "",
+			"IncotermsVersion": "",
+			"LastChangeDateTime": "",
+			"PurchasingProcessingStatus": "02",
+			"PurchasingProcessingStatusName": "Active",
+			"PurgContractIsInPreparation": false,
+			"to_PurchaseContractItem": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PURCHASECONTRACT_PROCESS_SRV/A_PurchaseContract('4600000001')/to_PurchaseContractItem"
 		}
 	],
-	"time": "2021-12-17T12:24:17.442821+09:00"
+	"time": "2021-12-18T18:46:42.256637+09:00"
 }
 
 ```
-

@@ -28,7 +28,6 @@ type Header struct {
 			PurchaseContractTargetAmount   string      `json:"PurchaseContractTargetAmount"`
 			InvoicingParty                 string      `json:"InvoicingParty"`
 			ReleaseCode                    string      `json:"ReleaseCode"`
-			IncotermsVersion               string      `json:"IncotermsVersion"`
 			LastChangeDateTime             string      `json:"LastChangeDateTime"`
 			PurchasingProcessingStatus     string      `json:"PurchasingProcessingStatus"`
 			PurchasingProcessingStatusName string      `json:"PurchasingProcessingStatusName"`
