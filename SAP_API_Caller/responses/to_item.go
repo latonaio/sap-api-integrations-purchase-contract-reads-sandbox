@@ -42,6 +42,7 @@ type ToItem struct {
 			InvoiceIsGoodsReceiptBased     bool        `json:"InvoiceIsGoodsReceiptBased"`
 			ManualDeliveryAddressID        string      `json:"ManualDeliveryAddressID"`
 			VolumeUnit                     string      `json:"VolumeUnit"`
+			Subcontractor                  string      `json:"Subcontractor"`
 			EvaldRcptSettlmtIsAllowed      bool        `json:"EvaldRcptSettlmtIsAllowed"`
 			Material                       string      `json:"Material"`
 			ProductType                    string      `json:"ProductType"`

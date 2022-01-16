@@ -27,6 +27,9 @@ type Item struct {
 			TaxCode                        string      `json:"TaxCode"`
 			TaxCountry                     string      `json:"TaxCountry"`
 			StockType                      string      `json:"StockType"`
+			IsInfoRecordUpdated            string      `json:"IsInfoRecordUpdated"`
+			PriceIsToBePrinted             bool        `json:"PriceIsToBePrinted"`
+			PurgDocEstimatedPrice          bool        `json:"PurgDocEstimatedPrice"`
 			PlannedDeliveryDurationInDays  string      `json:"PlannedDeliveryDurationInDays"`
 			OverdelivTolrtdLmtRatioInPct   string      `json:"OverdelivTolrtdLmtRatioInPct"`
 			UnlimitedOverdeliveryIsAllowed bool        `json:"UnlimitedOverdeliveryIsAllowed"`
@@ -38,6 +41,7 @@ type Item struct {
 			InvoiceIsExpected              bool        `json:"InvoiceIsExpected"`
 			InvoiceIsGoodsReceiptBased     bool        `json:"InvoiceIsGoodsReceiptBased"`
 			ManualDeliveryAddressID        string      `json:"ManualDeliveryAddressID"`
+			VolumeUnit                     string      `json:"VolumeUnit"`
 			Subcontractor                  string      `json:"Subcontractor"`
 			EvaldRcptSettlmtIsAllowed      bool        `json:"EvaldRcptSettlmtIsAllowed"`
 			Material                       string      `json:"Material"`

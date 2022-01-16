@@ -2,7 +2,7 @@
 sap-api-integrations-purchase-contract-reads は、外部システム(特にエッジコンピューティング環境)をSAPと統合することを目的に、SAP API で　購買基本契約データを取得するマイクロサービスです。    
 sap-api-integrations-purchase-contract-reads には、サンプルのAPI Json フォーマットが含まれています。   
 sap-api-integrations-purchase-contract-reads は、オンプレミス版である（＝クラウド版ではない）SAPS4HANA API の利用を前提としています。クラウド版APIを利用する場合は、ご注意ください。   
-https://api.sap.com/api/OP_API_PURCHASE_CONTRACT_SRV_0001/overview  
+https://api.sap.com/api/OP_API_PURCHASECONTRACT_PROCESS_SRV/overview  
 
 ## 動作環境  
 sap-api-integrations-purchase-contract-reads は、主にエッジコンピューティング環境における動作にフォーカスしています。  
@@ -18,7 +18,7 @@ sap-api-integrations-purchase-contract-reads は、外部システムがクラ�
 ## 本レポジトリ が 対応する API サービス
 sap-api-integrations-purchase-contract-reads が対応する APIサービス は、次のものです。
 
-* APIサービス概要説明 URL: https://api.sap.com/api/OP_API_PURCHASE_CONTRACT_SRV_0001/overview  
+* APIサービス概要説明 URL: https://api.sap.com/api/OP_API_PURCHASECONTRACT_PROCESS_SRV/overview  
 * APIサービス名(=baseURL): API_PURCHASE_CONTRACT_SRV
 
 ## 本レポジトリ に 含まれる API名
