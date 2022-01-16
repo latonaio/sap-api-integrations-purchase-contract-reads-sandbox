@@ -23,6 +23,9 @@
 			"TaxCode": "",
 			"TaxCountry": "",
 			"StockType": "",
+			"IsInfoRecordUpdated": "",
+			"PriceIsToBePrinted": true,
+			"PurgDocEstimatedPrice": false,
 			"PlannedDeliveryDurationInDays": "10",
 			"OverdelivTolrtdLmtRatioInPct": "0.0",
 			"UnlimitedOverdeliveryIsAllowed": false,
@@ -34,6 +37,7 @@
 			"InvoiceIsExpected": true,
 			"InvoiceIsGoodsReceiptBased": false,
 			"ManualDeliveryAddressID": "22889",
+			"VolumeUnit": "",
 			"Subcontractor": "",
 			"EvaldRcptSettlmtIsAllowed": false,
 			"Material": "MZ-TG-A11",
@@ -43,5 +47,5 @@
 			"to_PurCtrAddress": "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/API_PURCHASECONTRACT_PROCESS_SRV/A_PurchaseContractItem(PurchaseContract='4600000001',PurchaseContractItem='10')/to_PurCtrAddress"
 		}
 	],
-	"time": "2021-12-18T18:48:31.663306+09:00"
+	"time": "2022-01-16T22:24:15.920974+09:00"
 }
